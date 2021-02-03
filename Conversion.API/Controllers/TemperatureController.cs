@@ -7,7 +7,7 @@ using Conversion.Core.Contracts;
 namespace Conversion.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TemperatureController : ControllerBase
     {
         private readonly ILogger<TemperatureController> _logger;

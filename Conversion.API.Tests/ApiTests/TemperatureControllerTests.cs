@@ -23,7 +23,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToCelsius()
         {
-            var response = await _httpClient.GetAsync("temperature/celsius/90");
+            var response = await _httpClient.GetAsync("api/temperature/celsius/90");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -33,7 +33,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToFahrenheit()
         {
-            var response = await _httpClient.GetAsync("temperature/fahrenheit/32.2222");
+            var response = await _httpClient.GetAsync("api/temperature/fahrenheit/32.2222");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);

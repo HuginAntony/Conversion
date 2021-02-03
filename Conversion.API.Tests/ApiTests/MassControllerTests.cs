@@ -23,7 +23,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToKilograms()
         {
-            var response = await _httpClient.GetAsync("mass/kilograms/225");
+            var response = await _httpClient.GetAsync("api/mass/kilograms/225");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -33,7 +33,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToPounds()
         {
-            var response = await _httpClient.GetAsync("mass/pounds/100");
+            var response = await _httpClient.GetAsync("api/mass/pounds/100");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);

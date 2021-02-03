@@ -23,7 +23,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToKilometers()
         {
-            var response = await _httpClient.GetAsync("length/kilometers/4");
+            var response = await _httpClient.GetAsync("api/length/kilometers/4");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -33,7 +33,7 @@ namespace Conversion.API.Tests.ApiTests
         [Test]
         public async Task Can_Call_ConvertToMiles()
         {
-            var response = await _httpClient.GetAsync("length/miles/2");
+            var response = await _httpClient.GetAsync("api/length/miles/2");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Conversion.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LengthController : ControllerBase
     {
         private readonly ILogger<LengthController> _logger;
