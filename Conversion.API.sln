@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversion.API", "Conversion.API\Conversion.API.csproj", "{1A4DF68B-2BA5-43B0-916A-778482C3E5FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conversion.API", "Conversion.API\Conversion.API.csproj", "{1A4DF68B-2BA5-43B0-916A-778482C3E5FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
