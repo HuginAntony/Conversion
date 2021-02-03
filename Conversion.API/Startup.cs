@@ -9,7 +9,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Conversion.API.Policies;
 using Conversion.Core;
 using Conversion.Core.Contracts;
 using Conversion.Core.Converters;
@@ -17,8 +19,10 @@ using Conversion.DataAccess;
 using Conversion.DataAccess.Core;
 using Conversion.DataAccess.Interfaces;
 using Conversion.DataAccess.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -45,11 +49,42 @@ namespace Conversion.API
             ConfigureDatabase(services);
 
             services.AddScoped<IUnitOfWork<ConversionDbContext>, UnitOfWork<ConversionDbContext>>();
+            services.AddScoped(typeof(IRepository<ConversionHistory>), typeof(EfRepository<ConversionDbContext, ConversionHistory>));
 
             // Add Identity service
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ConversionDbContext>()
                     .AddDefaultTokenProviders();
+
+            // Adding Authentication with Jwt Bearer  
+            services.AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.SaveToken = true;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                            ClockSkew = TimeSpan.Zero
+                        };
+                    });
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy(UserRoles.Admin, Policy.AdminPolicy());
+                config.AddPolicy(UserRoles.User, Policy.UserPolicy());
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -86,7 +121,7 @@ namespace Conversion.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Conversion Web API v1");
             });
 
-            app.UseCors(x => x.WithOrigins(Configuration["AllowedHosts"])
+            app.UseCors(x => x.WithOrigins(Configuration["AllowedOrigin"])
                               .AllowAnyMethod()
                               .AllowAnyHeader());
 
