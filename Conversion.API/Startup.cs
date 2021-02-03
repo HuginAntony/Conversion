@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using Conversion.API.Policies;
-using Conversion.Core;
 using Conversion.Core.Contracts;
 using Conversion.Core.Converters;
 using Conversion.DataAccess;
@@ -50,6 +44,8 @@ namespace Conversion.API
 
             services.AddScoped<IUnitOfWork<ConversionDbContext>, UnitOfWork<ConversionDbContext>>();
             services.AddScoped(typeof(IRepository<ConversionHistory>), typeof(EfRepository<ConversionDbContext, ConversionHistory>));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Add Identity service
             services.AddIdentity<ApplicationUser, IdentityRole>()
