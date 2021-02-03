@@ -86,7 +86,7 @@ namespace Conversion.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Conversion Web API v1");
             });
 
-            app.UseCors(x => x.WithOrigins("http://localhost:4200")
+            app.UseCors(x => x.WithOrigins(Configuration["AllowedHosts"])
                               .AllowAnyMethod()
                               .AllowAnyHeader());
 
