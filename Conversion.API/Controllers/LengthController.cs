@@ -20,17 +20,17 @@ namespace Conversion.API.Controllers
         }
 
         [HttpGet]
-        [Route("length/kilometers/{value}")]
+        [Route("kilometers/{value}")]
         public async Task<IActionResult> ConvertToKilometers(decimal value)
         {
-            return Ok();
+            return Ok(await _lengthConverter.ConvertToKilometers(value));
         }
 
         [HttpGet]
-        [Route("length/miles/{value}")]
+        [Route("miles/{value}")]
         public async Task<IActionResult> ConvertToMiles(decimal value)
         {
-            return Ok();
+            return Ok(await _lengthConverter.ConvertToMiles(value));
         }
     }
 }

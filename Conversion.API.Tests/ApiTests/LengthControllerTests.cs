@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Conversion.API.Tests.ApiTests
 {
     [TestFixture]
-    public class TemperatureControllerTests
+    public class LengthControllerTests
     {
         private HttpClient _httpClient;
 
@@ -21,23 +21,23 @@ namespace Conversion.API.Tests.ApiTests
         }
 
         [Test]
-        public async Task Can_Call_ConvertToCelsius()
+        public async Task Can_Call_ConvertToKilometers()
         {
-            var response = await _httpClient.GetAsync("temperature/celsius/90");
+            var response = await _httpClient.GetAsync("length/kilometers/4");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(result == 32.2222m);
+            Assert.IsTrue(result == 6.4374m);
         }
 
         [Test]
-        public async Task Can_Call_ConvertToFahrenheit()
+        public async Task Can_Call_ConvertToMiles()
         {
-            var response = await _httpClient.GetAsync("temperature/fahrenheit/32.2222");
+            var response = await _httpClient.GetAsync("length/miles/2");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(result == 90);
+            Assert.IsTrue(result == 1.2427m);
         }
     }
 }

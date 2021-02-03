@@ -1,10 +1,7 @@
 ﻿using System.IO;
-using Conversion.API;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Tournament.WebApi.Tests.ApiTests
+namespace Conversion.API.Tests
 {
     public class TestApiStartup : Startup
     {

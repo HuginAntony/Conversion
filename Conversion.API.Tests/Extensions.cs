@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Tournament.WebApi.Tests.ApiTests
+namespace Conversion.API.Tests
 {
     public static class Extensions
     {

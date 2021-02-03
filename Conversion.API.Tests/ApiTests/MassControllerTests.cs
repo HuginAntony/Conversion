@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Conversion.API.Tests.ApiTests
 {
     [TestFixture]
-    public class TemperatureControllerTests
+    public class MassControllerTests
     {
         private HttpClient _httpClient;
 
@@ -21,23 +21,23 @@ namespace Conversion.API.Tests.ApiTests
         }
 
         [Test]
-        public async Task Can_Call_ConvertToCelsius()
+        public async Task Can_Call_ConvertToKilograms()
         {
-            var response = await _httpClient.GetAsync("temperature/celsius/90");
+            var response = await _httpClient.GetAsync("mass/kilograms/225");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(result == 32.2222m);
+            Assert.IsTrue(result == 102.06m);
         }
 
         [Test]
-        public async Task Can_Call_ConvertToFahrenheit()
+        public async Task Can_Call_ConvertToPounds()
         {
-            var response = await _httpClient.GetAsync("temperature/fahrenheit/32.2222");
+            var response = await _httpClient.GetAsync("mass/pounds/100");
             var result = await response.Deserialize<decimal>();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(result == 90);
+            Assert.IsTrue(result == 225);
         }
     }
 }
