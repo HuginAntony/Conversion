@@ -8,7 +8,9 @@ namespace Tournament.WebApi.Tests.ApiTests
     {
         public static async Task<T> Deserialize<T>(this HttpResponseMessage newResponse)
         {
-            return JsonSerializer.Deserialize<T>(await newResponse.Content.ReadAsByteArrayAsync(), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var bytes = await newResponse.Content.ReadAsByteArrayAsync();
+
+            return JsonSerializer.Deserialize<T>(bytes, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
     }
 }

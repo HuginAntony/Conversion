@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Conversion.Core;
+using Conversion.Core.Contracts;
+using Conversion.Core.Converters;
 
 namespace Conversion.API
 {
@@ -26,6 +29,10 @@ namespace Conversion.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<ITemperatureConverter, TemperatureConverter>();
+            services.AddScoped<IMassConverter, MassConverter>();
+            services.AddScoped<ILengthConverter, LengthConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
