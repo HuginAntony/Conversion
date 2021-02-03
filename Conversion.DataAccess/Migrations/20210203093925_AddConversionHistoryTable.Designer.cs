@@ -4,14 +4,16 @@ using Conversion.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Conversion.DataAccess.Migrations
 {
     [DbContext(typeof(ConversionDbContext))]
-    partial class ConversionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210203093925_AddConversionHistoryTable")]
+    partial class AddConversionHistoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

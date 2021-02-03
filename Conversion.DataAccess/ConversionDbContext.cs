@@ -1,4 +1,5 @@
-﻿using Conversion.DataAccess.Models;
+﻿using System.Collections.Generic;
+using Conversion.DataAccess.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,8 +17,12 @@ namespace Conversion.DataAccess
 
         }
 
+        public virtual DbSet<ConversionHistory> ConversionHistory { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ConversionHistoryConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }
