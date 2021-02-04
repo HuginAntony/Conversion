@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Conversion.Core.ApiModels;
@@ -41,8 +42,10 @@ namespace Conversion.API.Controllers
         public async Task<IActionResult> SaveHistory(HistoryRequest request)
         {
             var conversionHistory = _mapper.Map<ConversionHistory>(request);
+            conversionHistory.CreatedAt = DateTime.Now;
 
             _repository.Insert(conversionHistory);
+
             await _unitOfWork.CommitAsync();
 
             return Ok(_mapper.Map<List<HistoryResponse>>(conversionHistory));
