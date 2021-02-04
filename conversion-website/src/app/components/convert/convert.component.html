@@ -7,7 +7,6 @@
           <div class="form-group">
             <label>Conversion Type</label>
             <select
-              required
               ngModel
               #e="ngModel"
               class="form-control"
@@ -16,11 +15,8 @@
               [ngClass]="{ 'is-invalid': e.touched && e.errors }"
               [ngClass]="{ 'is-valid': e.touched && e.valid }"
             >
-            <option *ngFor="let key of statusKeys" [ngValue]="key" [label]="conversionTypes[key]"></option>
+            <option *ngFor="let key of statusKeys" [ngValue]="key" [label]="conversionTypes[key]" [selected]="conversionTypes[conversionTypes.Temperature]"></option>
             </select>
-            <div class="invalid-feedback" *ngIf="e.touched && e.errors">
-              <div *ngIf="e.hasError('required')">Conversion type is required.</div>
-            </div>
           </div>
         </div>
       </div>
@@ -37,6 +33,7 @@
               name="fromUnit"
               [ngClass]="{ 'is-invalid': fu.touched && fu.errors }"
               [ngClass]="{ 'is-valid': fu.touched && fu.valid }"
+              (change)="onChange($event.target, f)"
             >
             <ng-container *ngIf="f.controls.conversionType.value == conversionTypes.Temperature">
               <option *ngFor="let key of tempKeys" [ngValue]="key" [label]="tempUnits[key]"></option>
@@ -50,6 +47,7 @@
             </select>
             <div class="invalid-feedback" *ngIf="fu.touched && fu.errors">
               <div *ngIf="fu.hasError('required')">From unit is required.</div>
+              <div *ngIf="fu.hasError('sameUnit')">From Unit cannot be the same as To Unit.</div>
             </div>
           </div>
         </div>
@@ -68,6 +66,7 @@
               [ngClass]="{ 'is-invalid': tu.touched && tu.errors }"
               [ngClass]="{ 'is-valid': tu.touched && tu.valid }"
               (change)="onChange($event.target, f)"
+
             >
             <ng-container *ngIf="f.controls.conversionType?.value == conversionTypes.Temperature">
               <option *ngFor="let key of tempKeys" [ngValue]="key" [label]="tempUnits[key]"></option>
@@ -80,8 +79,8 @@
             </ng-container>
             </select>
             <div class="invalid-feedback" *ngIf="tu.touched && tu.errors">
-              <div *ngIf="fu.hasError('required')">To unit is required.</div>
-              <div *ngIf="fu.hasError('sameUnit')">To Unit cannot be the same as From Unit.</div>
+              <div *ngIf="tu.hasError('required')">To unit is required.</div>
+              <div *ngIf="tu.hasError('sameUnit')">To Unit cannot be the same as From Unit.</div>
             </div>
           </div>
         </div>
@@ -106,8 +105,6 @@
           </div>
         </div>
       </div>
-
-{{f.value | json}}
     </div>
     <div class="card-footer">
       <button type="submit" class="card-link btn btn-primary" [disabled]="f.invalid || f.pristine">Convert</button>

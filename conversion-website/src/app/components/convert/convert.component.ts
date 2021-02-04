@@ -45,8 +45,12 @@ export class ConvertComponent implements OnInit {
 
   onChange(c, form: NgForm): void{
     if (form.controls.toUnit.value === form.controls.fromUnit.value){
-      console.log('running this');
+      form.controls.fromUnit.setErrors({sameUnit: true });
       form.controls.toUnit.setErrors({sameUnit: true });
+    }
+    else{
+      form.controls.fromUnit.setErrors({sameUnit: false });
+      form.controls.toUnit.setErrors({sameUnit: false });
     }
   }
   saveChanges(form: NgForm): void {
