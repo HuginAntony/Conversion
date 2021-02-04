@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./conversion.api/dockerfile
+    ports:
+       - "5001:80"
     depends_on:
       - "db"
     networks:
@@ -15,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: ./conversion-website/dockerfile
+     ports:
+       - "4200:80"
     depends_on:
       - "db"
     networks:
@@ -27,6 +31,8 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD= pass
       - POSTGRES_DB= db
+     ports:
+       - "5432:5432"
     networks:
      - my-network
 
