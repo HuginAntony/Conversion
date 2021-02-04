@@ -1,5 +1,5 @@
 export interface HistoryRequest {
-    coversionType: string;
+    conversionType: string;
     conversionFrom: string;
     conversionTo: string;
     valueToConvert: number;

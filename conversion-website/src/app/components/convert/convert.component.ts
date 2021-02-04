@@ -49,43 +49,70 @@ export class ConvertComponent implements OnInit {
       form.controls.toUnit.setErrors({sameUnit: true });
     }
     else{
-      form.controls.fromUnit.setErrors({sameUnit: false });
-      form.controls.toUnit.setErrors({sameUnit: false });
+      form.controls.fromUnit.setErrors(null);
+      form.controls.toUnit.setErrors(null);
     }
   }
   saveChanges(form: NgForm): void {
     const conType = form.controls.conversionType.value;
     switch (conType) {
       case ConversionType.Temperature:
-        this.conversionService.getCelsius(form.controls.valueToConvert.value).subscribe(r => {
-          this.handleSuccess(`${form.controls.valueToConvert.value} degrees Fahrenheit is ${r} degrees celsius`);
-        });
+        if (form.controls.toUnit.value === this.tempUnits.Celsius){
+          this.conversionService.getCelsius(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} degrees Fahrenheit is ${r} degrees celsius`);
+          });
+        }
+        else{
+          this.conversionService.getFahrenheit(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} degrees Celsius is ${r} degrees Fahrenheit`);
+          });
+        }
         break;
       case ConversionType.Length:
-        this.conversionService.getMiles(form.controls.valueToConvert.value).subscribe(r => {
-          this.handleSuccess(`${form.controls.valueToConvert.value} kilometers is ${r} miles`);
-        });
+        if (form.controls.toUnit.value === this.lenghtUnits.Miles){
+          this.conversionService.getMiles(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} kilometers is ${r} miles`);
+          });
+        }
+        else{
+          this.conversionService.getKilometers(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} miles is ${r} kilometers`);
+          });
+        }
         break;
       case ConversionType.Mass:
-        this.conversionService.getKilograms(form.controls.valueToConvert.value).subscribe(r => {
-          this.handleSuccess(`${form.controls.valueToConvert.value} pounds is ${r} kilograms`);
-        });
+        if (form.controls.toUnit.value === this.massUnits.Kilograms){
+          this.conversionService.getKilograms(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} pounds is ${r} kilograms`);
+          });
+        }
+        else{
+          this.conversionService.getPounds(form.controls.valueToConvert.value).subscribe(r => {
+            this.saveUserHistory(form, r);
+            this.handleSuccess(`${form.controls.valueToConvert.value} kilograms is ${r} pounds`);
+          });
+        }
         break;
     }
   }
 
   saveUserHistory(form: NgForm, result: number): void{
-    let h: HistoryRequest;
-    h.conversionFrom = form.controls.fromUnit.value;
-    h.conversionTo = form.controls.toUnit.value;
-    h.userId = this.user.id;
-    h.valueToConvert = form.controls.valueToConvert.value;
-    h.coversionType = form.controls.conversionType.value;
-    h.convertedResult = result;
+    console.log(form);
+    let h: HistoryRequest = {
+    conversionFrom: form.controls.fromUnit.value,
+    conversionTo: form.controls.toUnit.value,
+    userId: this.user.id,
+    valueToConvert: form.controls.valueToConvert.value,
+    conversionType: form.controls.conversionType.value,
+    convertedResult: result
+    }
 
-    this.conversionService.create(h).subscribe(r => {
-      //this.handleSuccess(`${form.controls.valueToConvert.value} degrees Fahrenheit is ${r} degrees celsius`);
-    });
+    this.conversionService.create(h).subscribe();
   }
 
   handleSuccess(message: string): void {
