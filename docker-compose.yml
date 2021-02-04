@@ -23,6 +23,10 @@ services:
   db:
     container_name: 'postgres'
     image: postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD= pass
+      - POSTGRES_DB= db
     networks:
      - my-network
 
