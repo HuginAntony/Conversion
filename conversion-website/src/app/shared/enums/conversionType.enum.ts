@@ -1,8 +1,7 @@
-
 export enum ConversionType {
-  Temperature,
-  Mass,
-  Length
+  Temperature = 'Temperature',
+  Mass = 'Mass',
+  Length = 'Length'
 }
 
 

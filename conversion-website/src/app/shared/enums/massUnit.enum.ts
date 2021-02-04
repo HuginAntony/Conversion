@@ -1,5 +1,4 @@
-
 export enum MassUnit {
-  Kilograms,
-  Pounds
+  Kilograms = 'Kilograms',
+  Pounds = 'Pounds'
 }

@@ -1,5 +1,4 @@
-
 export enum LengthUnit {
-  Kilometers,
-  Miles
+  Kilometers = 'Kilometers',
+  Miles = 'Miles'
 }
